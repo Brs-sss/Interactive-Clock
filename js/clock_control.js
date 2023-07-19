@@ -233,7 +233,7 @@ const initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那
 
 //点击按钮设置时间
 settime_btn.addEventListener('click',()=>{
-    var time=prompt('请输入时间');
+    var time=prompt('请输入时间',clock.getTimeString());
     let times=time.split(':').map((x)=>{return Number(x)})
     clock.setTime(...times,0)
 },false)
