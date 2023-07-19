@@ -1,7 +1,7 @@
 /**
  * Clock类是一个控制表的运行逻辑的类
  */
-export class Clock{
+class Clock{
     //{hour,minute,second,tick}是唯一的tick坐标
     //tick的含义是50ms，每个tick表面会更新动画一次，tick=0意思是{hour,min,sec,milli}={0,0,0,0}
             //tick=1意味着{hour,min,sec,milli}={0,0,0,50} 那么当表盘的周期hour=12h,对应的tick数是864,000
