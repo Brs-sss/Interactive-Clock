@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                display: grid;
+                grid-template-columns: 1fr 500px 1fr;
+                grid-template-rows: 100px 500px 1fr;
+            }
+            #main-canvas{
+                grid-area: 2/2/3/3;
+                border: 2px black solid;
+                position: relative;
+            }
+        </style>
+
+    </head>
+    <body>
+        <svg width="500px" height="500px" id="main-canvas">
+            <!-- 大表盘 -->
+              <circle cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="black" stroke-width="5" stroke-opacity="0.3" ></circle> 
+            <!-- 中心 -->
+              <circle cx="250" cy="250" r="5" fill="none" fill-opacity="0.6" stroke="red" stroke-width="5" stroke-opacity="0.3"></circle>
+              <!-- 秒针 -->
+              <line id="second-hand" x1="250" y1="250" x2="250" y2="60" stroke="red" stroke-width="2px"></line>
+              <!-- 分针 -->
+              <line id="minute-hand" x1="250" y1="250" x2="250" y2="100" stroke="#800000" stroke-width="4px"></line>
+              <!-- 时针 -->
+              <line id="hour-hand" x1="250" y1="250" x2="250" y2="150" stroke="black" stroke-width="5px"></line>
+        </svg>
+        <script type="text/javascript" src="control.js"></script>
+
+        
+    </body>
+</html>
