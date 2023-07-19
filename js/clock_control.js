@@ -129,6 +129,9 @@ const svgns = "http://www.w3.org/2000/svg"; //svg命名空间
 //获取suv下面的数字显示器
 let numerial_time=document.getElementById('numeral-time');
 
+//获取设置时间的按钮
+let settime_btn=document.getElementById('set-time-button');
+
 /*---------------------------------*/
 
 //将角度转化为弧度
@@ -227,13 +230,13 @@ function clockRun() {
 const initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
 //可以用
 
-/*let clock2=new Clock();
-clock2.minute=1;
 
-var id = setInterval(()=> {
-    clock2.jumpToPreviousTick()
-    clock2.printNow()
-},5)*/  //测试倒计时
+//点击按钮设置时间
+settime_btn.addEventListener('click',()=>{
+    var time=prompt('请输入时间');
+    let times=time.split(':').map((x)=>{return Number(x)})
+    clock.setTime(...times,0)
+},false)
 
 
 
