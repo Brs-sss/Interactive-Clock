@@ -1,7 +1,7 @@
 /**
  * Clock类是一个控制表的运行逻辑的类
  */
-class Clock{
+export class Clock{
     //{hour,minute,second,tick}是唯一的tick坐标
     //tick的含义是50ms，每个tick表面会更新动画一次，tick=0意思是{hour,min,sec,milli}={0,0,0,0}
             //tick=1意味着{hour,min,sec,milli}={0,0,0,50} 那么当表盘的周期hour=12h,对应的tick数是864,000
@@ -22,11 +22,11 @@ class Clock{
 
     set global_tick(g) {
         this.tick = g % 20
-        g /= 20
+        g = Math.floor(g / 20)
         this.second = g % 60
-        g /= 60
+        g = Math.floor(g / 60)
         this.minute = g % 60
-        g /= 60
+        g = Math.floor(g / 60)
         this.hour = g % 12
     }
 
@@ -50,6 +50,14 @@ class Clock{
                 }
             }
         }
+    }
+
+    /**
+     * 用于tick自减，适用于倒计时
+     */
+    jumpToPreviousTick() {
+        if(this.global_tick > 0) this.global_tick--;
+        return this.global_tick === 0;
     }
 
     /**
@@ -102,6 +110,6 @@ class Clock{
      * 用于debug输出当前时刻
      */
     printNow(){
-
+        console.log(this.hour+':'+this.minute+':'+this.second+':'+this.tick)
     }
 }
