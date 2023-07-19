@@ -110,6 +110,13 @@ export class Clock{
      * 用于debug输出当前时刻
      */
     printNow(){
-        console.log(this.hour+':'+this.minute+':'+this.second+':'+this.tick)
+        console.log(this.hour + ':' + this.minute + ':'+this.second + ':' + this.tick)
+    }
+
+    /**
+     * 获取当前的时分秒的时间string eg  01:15:26
+     */
+    getTimeString() {
+        return padding(this.hour) + ':' + padding(this.minute) + ':' + padding(this.second)
     }
 }

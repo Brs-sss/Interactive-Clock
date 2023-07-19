@@ -15,6 +15,14 @@
                 border: 2px black solid;
                 position: relative;
             }
+            #numeral-time{
+                grid-area: 3/2/4/3;
+                justify-self: center;
+                font-size: 40pt;
+                position: relative;
+                top: 20px;
+                color: darkblue;
+            }
         </style>
 
     </head>
@@ -31,9 +39,8 @@
               <!-- 时针 -->
               <line id="hour-hand" x1="250" y1="250" x2="250" y2="150" stroke="black" stroke-width="5px"></line>
         </svg>
-        <!-- <script type="text/javascript" src="../js/clock.js"></script> -->
+        <div id="numeral-time">00:00:00</div>
+        <script type="text/javascript" src="../js/clock.js"></script>
         <script type="text/javascript" src="../js/clock_control.js"></script>
-
-        
     </body>
 </html>

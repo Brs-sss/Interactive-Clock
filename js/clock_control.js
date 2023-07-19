@@ -110,18 +110,36 @@ class Clock{
      * 用于debug输出当前时刻
      */
     printNow(){
-        console.log(this.hour+':'+this.minute+':'+this.second+':'+this.tick)
+        console.log(this.hour + ':' + this.minute + ':'+this.second + ':' + this.tick)
+    }
+
+    /**
+     * 获取当前的时分秒的时间string eg  01:15:26
+     */
+    getTimeString() {
+        return padding(this.hour) + ':' + padding(this.minute) + ':' + padding(this.second)
     }
 }
 
+/*-----------获取html元素区----------*/
 //获取svg画布元素
 let canvas=document.getElementById('main-canvas');
 const svgns = "http://www.w3.org/2000/svg"; //svg命名空间
 
+//获取suv下面的数字显示器
+let numerial_time=document.getElementById('numeral-time');
+
+/*---------------------------------*/
+
 //将角度转化为弧度
-function Rad(degree)
-{
+function Rad(degree){
     return degree*Math.PI/180;
+}
+
+//格式化成两位数字：0=>00  9=>09   12=>12
+function padding(num){
+    if(num < 10) return '0'+num
+    else return `${num}`
 }
 
 ///页面初始化时，绘制所有的表盘刻度（包括大刻度和小刻度）
@@ -189,13 +207,25 @@ function drawClock(hour_angle, minute_angle, second_angle) {
     drawAngle.apply(hourHand,[hour_angle,r_hour])
 }
 
+//画数字显示器
+function drawNumerialTime() {
+    numerial_time.textContent = clock.getTimeString();
+}
+
+
 /**
- * 每隔一个tick 更新一次绘制的样式
+ * 表盘和数字显示器运行函数 每隔一个tick 更新一次绘制的样式
+ * @return 返回此setInterval函数的id，用于将来停止运行
  */
-setInterval(()=> {
+function clockRun() {
+    return setInterval(()=> {
     drawClock(...clock.getAngle())
+    drawNumerialTime()
     clock.jumpToNextTick()
-},50)
+},50)}
+
+const initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
+//可以用
 
 /*let clock2=new Clock();
 clock2.minute=1;
