@@ -132,6 +132,7 @@ function addMouseEvent(degree) {
     let dragging = false
 
     this.addEventListener('mousedown', (event)=> {
+        console.log([cx+canvas.getBoundingClientRect().left, cy+canvas.getBoundingClientRect().top, event.clientX, event.clientY])
         dragging = true
         this.style.cursor = 'grab' // 改变光标的样式
         delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
@@ -152,33 +153,46 @@ function addMouseEvent(degree) {
             console.log('angles: ', angles)
             delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
             delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top);
+            console.log([cx+canvas.getBoundingClientRect().left, cy+canvas.getBoundingClientRect().top, event.clientX, event.clientY])
             let index = 0; // 时针：0 分针：1 秒针：2
             if (degree==6) index = 2
             else if (degree==6/60) index = 1
             else if (degree==30/(60*60)) index = 0
             delta_angle = function(){
-                temp_angle = Math.atan2(Math.abs(delta_x), Math.abs(delta_y))
-                if (delta_x>=0 && delta_y>=0) return Math.PI-temp_angle
-                if (delta_x>=0 && delta_y<0) {
-                    if (angles[index]>=350) {
-                        console.log('special', [angles[index],  2*Math.PI+temp_angle, (2*Math.PI+temp_angle)*180/Math.PI, (2*Math.PI+temp_angle)*180/Math.PI-angles[index]])
-                        return 2*Math.PI+temp_angle
-                    } 
-                      return temp_angle
+                let angles_index = angles[index] // 存下目标角度 为了方便计算，控制该值为0-360度
+                if (angles[index] >= 360) angles_index -= 360
+                if (delta_y==0) {
+                    if (delta_x>0 && angles_index<90 || delta_x<0 && angles_index>270) delta_y = 0.1 
+                    if (delta_x>0 && angles_index>90 || delta_x<0 && angles_index<270) delta_y = -1*0.1 
                 }
-                if (delta_x<0 && delta_y>=0)  return Math.PI+temp_angle
-                else if (delta_x<0 && delta_y<0) {
-                    console.log('<0 <0', [angles[index]<=10, angles[index]])
-                    if (angles[index]<=10) {
-                        console.log('special', -1*temp_angle)
-                        return -1*temp_angle
+                temp_angle = Math.atan2(Math.abs(delta_x), Math.abs(delta_y))
+                if (delta_x>=0 && delta_y>0) {
+                    console.log('>=0 >0')
+                    return (Math.PI-temp_angle)*180/Math.PI-angles_index
+                }
+                if (delta_x>=0 && delta_y<0) {
+                    if (angles_index>=350) {
+                        console.log('special', [angles_index,  2*Math.PI+temp_angle, (2*Math.PI+temp_angle)*180/Math.PI, (2*Math.PI+temp_angle)*180/Math.PI-angles_index])
+                        return (2*Math.PI+temp_angle)*180/Math.PI-angles_index
                     } 
-                    return 2*Math.PI-temp_angle
+                    return temp_angle*180/Math.PI-angles_index
+                }
+                if (delta_x<0 && delta_y>0) {
+                    console.log('<0 >0')
+                    return (Math.PI+temp_angle)*180/Math.PI-angles_index
+                }
+                else if (delta_x<0 && delta_y<0) {
+                    console.log('<0 <0', [angles_index<=10, angles_index])
+                    if (angles_index<=10) {
+                        console.log('special', -1*temp_angle)
+                        return -1*temp_angle*180/Math.PI-angles_index
+                    } 
+                    return (2*Math.PI-temp_angle)*180/Math.PI-angles_index
                 } 
                 
-            } 
-            if (current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20) < 0) clock.global_tick = 0
-            else clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20)
+            }  // 函数返回的是角度差，单位为°
+            if (current_ticks+parseInt(delta_angle()/degree*20) < 0) clock.global_tick = 0
+            else clock.global_tick = current_ticks+parseInt(delta_angle()/degree*20)
             console.log("new global_tick: ", clock.global_tick)
         }
     })
