@@ -110,11 +110,27 @@
                 z-index: 5;
             }
             
+            .mode_button {
+                display: block;
+                position: absolute;
+                right: 50px;
+                top: 40px;
+                width: 64px;
+                height: 64px;
+                /* font-size: 32px; */
+                background-color: transparent;
+            }
+            #sun{ background-image: url('../img/sun.png'); background-position: center; background-repeat: no-repeat;}
+            #moon{ background-image: url('../img/moon.png'); background-position: center; background-repeat: no-repeat; display:none;}
+            
         </style>
 
     </head>
-    <body>
-        
+    <body id="body">
+        <div id="mode">
+            <i class="mode_button" id="sun"></i>
+            <i class="mode_button" id="moon"></i>
+        </div>
         <div id="container">
             <div id="clock-face"></div>
             <div id="gradient-ring"></div>
