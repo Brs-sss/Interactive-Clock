@@ -54,6 +54,7 @@ class Clock{
 
     /**
      * 用于tick自减，适用于倒计时
+     * @return 返回时间是否到0了
      */
     jumpToPreviousTick() {
         if(this.global_tick > 0) this.global_tick--;
