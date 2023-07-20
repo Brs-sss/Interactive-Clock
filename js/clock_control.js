@@ -104,7 +104,7 @@ function clockRun() {
     clock.jumpToNextTick()
 },50)}
 
-const initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
+let initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
 //可以用
 
 
@@ -128,7 +128,9 @@ function addMouseEvent(degree) {
         dragging = true
         delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
         delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top); // 获得中心点在整个窗口中的坐标
+        //clearInterval(initial_run_id)
         window.addEventListener('mouseup', (event) => {
+            //initial_run_id=clockRun()
             dragging = false
         })
     })
@@ -142,18 +144,34 @@ function addMouseEvent(degree) {
             console.log('angles: ', angles)
             delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
             delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top);
+            let index = 0; // 时针：0 分针：1 秒针：2
+            if (degree==6) index = 2
+            else if (degree==6/60) index = 1
+            else if (degree==30/(60*60)) index = 0
             delta_angle = function(){
                 temp_angle = Math.atan2(Math.abs(delta_x), Math.abs(delta_y))
-                // console.log('raw angle: ', temp_angle)
                 if (delta_x>=0 && delta_y>=0) return Math.PI-temp_angle
-                if (delta_x>=0 && delta_y<0)  return temp_angle
+                if (delta_x>=0 && delta_y<0) {
+                    if (angles[index]>=350) {
+                        console.log('special', [angles[index],  2*Math.PI+temp_angle, (2*Math.PI+temp_angle)*180/Math.PI, (2*Math.PI+temp_angle)*180/Math.PI-angles[index]])
+                        return 2*Math.PI+temp_angle
+                    } 
+                      return temp_angle
+                }
                 if (delta_x<0 && delta_y>=0)  return Math.PI+temp_angle
-                else return 2*Math.PI-temp_angle
+                else if (delta_x<0 && delta_y<0) {
+                    console.log('<0 <0', [angles[index]<=10, angles[index]])
+                    if (angles[index]<=10) {
+                        console.log('special', -1*temp_angle)
+                        return -1*temp_angle
+                    } 
+                    return 2*Math.PI-temp_angle
+                } 
+                
             } 
-            if (degree==6) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[2])/degree*20)
-            else if (degree==6/60) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[1])/degree*20)
-            else if (degree==30/(60*60)) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[0])/degree*20)
-            // console.log("new global_tick: ", clock.global_tick)
+            if (current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20) < 0) clock.global_tick = 0
+            else clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20)
+            console.log("new global_tick: ", clock.global_tick)
         }
     })
     
