@@ -120,3 +120,10 @@ class Clock{
         return padding(this.hour) + ':' + padding(this.minute) + ':' + padding(this.second)
     }
 }
+
+
+//格式化成两位数字：0=>00  9=>09   12=>12
+function padding(num){
+    if(num < 10) return '0'+num
+    else return `${num}`
+}

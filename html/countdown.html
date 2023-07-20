@@ -1,0 +1,56 @@
+<!-- 倒计时表盘 -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                display: grid;
+                grid-template-columns: 1fr 500px 1fr;
+                grid-template-rows: 100px 500px 1fr;
+            }
+            #main-canvas{
+                grid-area: 2/2/3/3;
+                border: 2px black solid;
+                position: relative;
+            }
+            #numeral-time{
+                grid-area: 3/2/4/3;
+                justify-self: center;
+                font-size: 40pt;
+                position: relative;
+                top: 20px;
+                color: darkblue;
+            }
+            #set-time-button{
+                grid-area: 3/2/4/3;
+                position: relative;
+                top: 40px;
+                left: 400px;
+                width: 60px;
+                height: 30px;
+
+            }
+
+            #progress-ring{
+                stroke-dasharray: '10';
+                stroke-dashoffset: '5';
+            }
+        </style>
+
+    </head>
+    <body>
+        <svg width="500px" height="500px" id="main-canvas">
+            <!-- 大表盘 -->
+              <circle cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="black" stroke-width="10" stroke-opacity="0.3"></circle> 
+              <circle id="pregress-ring" cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="orange" stroke-width="10" stroke-opacity="0.9"></circle> 
+
+
+        </svg>
+        <div id="numeral-time">00:00:00</div>
+        <button type="button" id="set-time-button">设置时间</button>
+        <script type="text/javascript" src="../js/clock.js"></script>
+        <script type="text/javascript" src="../js/countdown_control.js"></script>
+    </body>
+</html>

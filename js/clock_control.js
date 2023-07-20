@@ -20,11 +20,6 @@ function Rad(degree){
     return degree*Math.PI/180;
 }
 
-//格式化成两位数字：0=>00  9=>09   12=>12
-function padding(num){
-    if(num < 10) return '0'+num
-    else return `${num}`
-}
 
 ///页面初始化时，绘制所有的表盘刻度（包括大刻度和小刻度）
 var lineContainer=document.createDocumentFragment();
@@ -118,7 +113,6 @@ settime_btn.addEventListener('click',()=>{
     let times=time.split(':').map((x)=>{return Number(x)})
     clock.setTime(...times,0)
 },false)
-
 
 
 
