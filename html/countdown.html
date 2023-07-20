@@ -9,6 +9,7 @@
                 display: grid;
                 grid-template-columns: 1fr 500px 1fr;
                 grid-template-rows: 100px 500px 1fr;
+                background-color: #333333;
             }
             #main-canvas{
                 grid-area: 2/2/3/3;
@@ -21,8 +22,10 @@
                 font-size: 40pt;
                 position: relative;
                 top: -280px;
-                color: darkblue;
+                color: yellow;
                 font-family: 'Courier New', Courier, monospace;
+                text-shadow: 0 0 10px #fff000;
+
             }
             #set-time-button{
                 grid-area: 3/2/4/3;
@@ -31,13 +34,14 @@
                 left: 400px;
                 width: 60px;
                 height: 30px;
-
             }
 
-            #progress-ring{
-                
+            #progress-ring{ 
                 stroke-dasharray: 0;
-                /* stroke-dashoffset: 314; */
+            }
+
+            #ball{
+                box-shadow: 0 0 10px orange;
             }
         </style>
 
@@ -47,6 +51,7 @@
             <!-- 大表盘 -->
               <circle cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="black" stroke-width="10" stroke-opacity="0.3"></circle> 
               <circle id="progress-ring" cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="orange" stroke-width="10" stroke-opacity="0.9" transform="rotate(-90 250 250)"></circle> 
+              <circle id="ball" cx="250" cy="50" r="5" fill="none" fill-opacity="0.6" stroke="orange" stroke-width="10" stroke-opacity="1"></circle> 
         </svg>
         <div id="numeral-time">00:00:00</div>
         <button type="button" id="set-time-button">设置时间</button>

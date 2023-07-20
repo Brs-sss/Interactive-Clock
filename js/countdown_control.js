@@ -3,6 +3,8 @@
 let progress_ring=document.getElementById("progress-ring")
 const svgns = "http://www.w3.org/2000/svg"; //svg命名空间
 
+let ball=document.getElementById("ball")
+
 //获取suv下面的数字显示器
 let numerial_time=document.getElementById('numeral-time');
 
@@ -10,6 +12,8 @@ let numerial_time=document.getElementById('numeral-time');
 let settime_btn=document.getElementById('set-time-button');
 
 /*---------------------------------*/
+
+const cx=250,cy=250,r=200; 
 
 //环形的完整周长
 let length = 2 * Math.PI * progress_ring.getAttribute("r")
@@ -25,11 +29,24 @@ function setRingPercentage(percentage) {
 
 }
 
+function Rad_percentage(percentage) {
+    return Math.PI * 2 *percentage;
+}
+
+
+
+function setBallPosition(percentage) {
+    this.setAttribute('cx',cx - r * Math.sin(Rad_percentage(percentage)))
+    this.setAttribute('cy',cy - r * Math.cos(Rad_percentage(percentage)))
+}
+
 let clock=new Clock;
 
 //画环形条缩减
 function drawClock(origin_tick) {
-    setRingPercentage.apply(progress_ring,[clock.global_tick / origin_tick])
+    let percentage = clock.global_tick / origin_tick
+    setRingPercentage.apply(progress_ring,[percentage])
+    setBallPosition.apply(ball,[1-percentage])
 }
 
 //画数字显示器
