@@ -89,6 +89,7 @@ function drawClock(hour_angle, minute_angle, second_angle) {
 //画数字显示器
 function drawNumerialTime() {
     numerial_time.textContent = clock.getTimeString();
+    // console.log('time', clock.getTimeString)
 }
 
 
@@ -114,7 +115,64 @@ settime_btn.addEventListener('click',()=>{
     clock.setTime(...times,0)
 },false)
 
+/**
+ * 
+ * @param {Number} degree 该针一秒走的角度（°） 时针：30/(60*60) 分针：6/60 秒针:6
+ * 函数原理：获取该针移动的角度，计算出global_tick的变化量，更新
+ */
 
+function addMouseEvent(degree) {
+    let dragging = false
+
+    this.addEventListener('mousedown', (event)=> {
+        dragging = true
+        delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
+        delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top); // 获得中心点在整个窗口中的坐标
+        window.addEventListener('mouseup', (event) => {
+            dragging = false
+        })
+    })
+
+    window.addEventListener('mousemove', (event) => {
+        if(dragging) { // 获得此时的时间
+            let current_ticks = clock.global_tick
+            this.style.cursor = 'grab' // 改变光标的样式
+            console.log('current_ticks: ', current_ticks)
+            let angles = clock.getAngle()
+            console.log('angles: ', angles)
+            delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
+            delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top);
+            delta_angle = function(){
+                temp_angle = Math.atan2(Math.abs(delta_x), Math.abs(delta_y))
+                // console.log('raw angle: ', temp_angle)
+                if (delta_x>=0 && delta_y>=0) return Math.PI-temp_angle
+                if (delta_x>=0 && delta_y<0)  return temp_angle
+                if (delta_x<0 && delta_y>=0)  return Math.PI+temp_angle
+                else return 2*Math.PI-temp_angle
+            } 
+            if (degree==6) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[2])/degree*20)
+            else if (degree==6/60) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[1])/degree*20)
+            else if (degree==30/(60*60)) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[0])/degree*20)
+            // console.log("new global_tick: ", clock.global_tick)
+        }
+    })
+    
+}
+
+/**
+ * 对时分秒针进行监听
+ */
+function addClockEventListener() {
+    secondHand.draggable = true
+    minuteHand.draggable = true
+    hourHand.draggable = true
+    
+    addMouseEvent.apply(secondHand, [6])
+    addMouseEvent.apply(minuteHand, [6/60])
+    addMouseEvent.apply(hourHand, [30/(60*60)])
+}
+
+addClockEventListener()
 
 
 
