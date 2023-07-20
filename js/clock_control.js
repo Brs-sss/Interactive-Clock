@@ -68,6 +68,10 @@ function drawAngle(degree,radius)
 let secondHand=document.getElementById('second-hand');
 let minuteHand=document.getElementById('minute-hand');
 let hourHand=document.getElementById('hour-hand');
+// 获取假的秒针 分针 时针的元素
+let fake_secondHand=document.getElementById('fake-second-hand');
+let fake_minuteHand=document.getElementById('fake-minute-hand');
+let fake_hourHand=document.getElementById('fake-hour-hand');
 //设定秒针 分针 时针的长度
 const r_sec=190, r_min=160, r_hour=100;
 
@@ -75,7 +79,7 @@ const r_sec=190, r_min=160, r_hour=100;
 let clock=new Clock();
 
 /**
- * 将时分秒绘制到页面上  具体画的样式由drawAngle规定。每个表盘可以实现不同的绘制方法
+ * 将时分秒（以及假的）绘制到页面上  具体画的样式由drawAngle规定。每个表盘可以实现不同的绘制方法
  * @param {*} hour_angle 
  * @param {*} minute_angle 
  * @param {*} second_angle 
@@ -84,6 +88,9 @@ function drawClock(hour_angle, minute_angle, second_angle) {
     drawAngle.apply(secondHand,[second_angle,r_sec])
     drawAngle.apply(minuteHand,[minute_angle,r_min])
     drawAngle.apply(hourHand,[hour_angle,r_hour])
+    drawAngle.apply(fake_secondHand,[second_angle,r_sec])
+    drawAngle.apply(fake_minuteHand,[minute_angle,r_min])
+    drawAngle.apply(fake_hourHand,[hour_angle,r_hour])
 }
 
 //画数字显示器
@@ -186,9 +193,13 @@ function addClockEventListener() {
     minuteHand.draggable = true
     hourHand.draggable = true
     
-    addMouseEvent.apply(secondHand, [6])
-    addMouseEvent.apply(minuteHand, [6/60])
+    // addMouseEvent.apply(secondHand, [6])
+    // addMouseEvent.apply(minuteHand, [6/60])
     addMouseEvent.apply(hourHand, [30/(60*60)])
+
+    addMouseEvent.apply(fake_secondHand, [6])
+    addMouseEvent.apply(fake_minuteHand, [6/60])
+    addMouseEvent.apply(fake_hourHand, [30/(60*60)])
 }
 
 addClockEventListener()
