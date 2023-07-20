@@ -1,21 +1,31 @@
 /*-------获取元素区--------*/
-//获取环形条
+// 获取环形条
 let progress_ring=document.getElementById("progress-ring")
 const svgns = "http://www.w3.org/2000/svg"; //svg命名空间
 
 let ball=document.getElementById("ball")
 
-//获取suv下面的数字显示器
+// 获取suv下面的数字显示器
 let numerial_time=document.getElementById('numeral-time');
 
-//获取设置时间的按钮
-let settime_btn=document.getElementById('set-time-button');
+// 获取设置时间的按钮
+let submit_btn = document.querySelector('#submit_button');
+
+// 获取时分秒输入框
+let hour_bar = document.querySelector('#hour_bar')
+let minute_bar = document.querySelector('#minute_bar')
+let second_bar = document.querySelector('#second_bar')
+
+// 获取交互按钮
+let pause_btn = document.querySelector("#pause")
+let reset_btn = document.querySelector("#reset")
+let cancel_btn = document.querySelector("#cancel")
 
 /*---------------------------------*/
 
 const cx=250,cy=250,r=200; 
 
-//环形的完整周长
+// 环形的完整周长
 let length = 2 * Math.PI * progress_ring.getAttribute("r")
 
 /**
@@ -33,8 +43,6 @@ function Rad_percentage(percentage) {
     return Math.PI * 2 *percentage;
 }
 
-
-
 function setBallPosition(percentage) {
     this.setAttribute('cx',cx - r * Math.sin(Rad_percentage(percentage)))
     this.setAttribute('cy',cy - r * Math.cos(Rad_percentage(percentage)))
@@ -42,35 +50,97 @@ function setBallPosition(percentage) {
 
 let clock=new Clock;
 
-//画环形条缩减
-function drawClock(origin_tick) {
+// 画环形条缩减
+function drawClock() {
     let percentage = clock.global_tick / origin_tick
+    console.log(percentage)
     setRingPercentage.apply(progress_ring,[percentage])
     setBallPosition.apply(ball,[1-percentage])
 }
 
-//画数字显示器
+// 画数字显示器
 function drawNumerialTime() {
     numerial_time.textContent = clock.getTimeString();
 }
 
+// 倒计时运行控制
+let timer
+let origin_tick
+let counting = false
+function run(){
+    drawClock()
+    drawNumerialTime()
+    if(clock.global_tick <= 0){
+        setTimeout(()=>{alert("时间终了！")}, 50)
+        pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
+        clearInterval(timer)
+        timer = undefined
+        counting = false
+        return
+    }
+    //记录总时间，用于计算剩下时间的比例
+    clock.jumpToPreviousTick()
+}
 
-settime_btn.addEventListener('click',()=>{
-    var time = prompt('请输入时间',clock.getTimeString()); //点击按钮弹出输入框
-    let times = time.split(':').map((x)=>{return Number(x)}) //解析用户输入
-    clock.setTime(...times,0) //给clock设置时间
-    let origin_tick = clock.global_tick //记录总时间，用于计算剩下时间的比例
-    let stop = false;  //倒计时是否停止？
-    let timer_id = setInterval(()=>{  //保留id便于停止倒计时
-        drawClock(origin_tick)
-        drawNumerialTime()
-        if(stop) { //如果倒计时停止
-            clearInterval(timer_id) 
-            setTimeout(()=>{   //延迟50ms弹出提示框，原因在于防止浏览器渲染不及时，导致环形条无法正常清零
-                alert("时间到了！")  
-            },50)
+// 交互部分——设置时间
+let time = [0, 0, 0, 0]
+submit_btn.addEventListener('click',()=>{
+    time[0] = hour_bar.value
+    time[1] = minute_bar.value
+    time[2] = second_bar.value
+    let all_zero = true
+    // 输入合法性检查
+    for(let i = 0; i < 3; i++){
+        if(time[i] === ""){
+            alert("请设置时间非空！")
+            return
         }
-        stop = clock.jumpToPreviousTick()
-    },50)
-},false)
+        if(time[i] != 0)
+            all_zero = false
+    }
+    if(all_zero){
+        alert("请设置时间非0！")
+        return
+    }
+    pause_btn.style['background-image'] = 'url(\'../img/pause.png\')'
+    clock.setTime(...time) //给clock设置时间
+    origin_tick = clock.global_tick
+    if(timer === undefined){
+        timer = setInterval("run()", 50)
+        counting = true
+    }
+}, false)
+
+// 交互部分——暂停
+pause_btn.addEventListener('click', ()=>{
+    if(!counting) return;
+    if(timer === undefined){
+        timer = setInterval("run(clock)", 50);
+        pause_btn.style['background-image'] = 'url(\'../img/pause.png\')'
+    }else{
+        clearInterval(timer)
+        timer = undefined
+        pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
+    }
+})
+
+// 交互部分——重置
+reset_btn.addEventListener('click', ()=>{
+    clock.setTime(...time)
+    drawClock()
+    drawNumerialTime()
+})
+
+// 交互部分——删除
+cancel_btn.addEventListener('click', ()=>{
+    clock.setTime(0, 0, 0, 0)
+    setRingPercentage.apply(progress_ring, [1])
+    setBallPosition.apply(ball, [0])
+    drawNumerialTime()
+    if(timer !== undefined){
+        pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
+        clearInterval(timer)
+        counting = false
+    }
+})
 

@@ -43,7 +43,7 @@ box.append(circleContainer);
 // 表针绘制
 let pointer = document.querySelector('#pointer');
 const inside_r = 160
-setGeometry.apply(pointer, [cx, cy - inside_r, 6])
+setGeometry.apply(pointer, [cx, cy - inside_r, 8])
 
 // 动画效果制作
 let time_content = document.querySelector("#time")
@@ -56,7 +56,7 @@ function run(clock) {
     let angle = clock.getAngle()[2]
     // 更新指针位置
     setGeometry.apply(pointer, 
-    [cx + inside_r * Math.sin(Rad(angle)), cy - inside_r * Math.cos(Rad(angle)), 5])
+    [cx + inside_r * Math.sin(Rad(angle)), cy - inside_r * Math.cos(Rad(angle)), 8])
     // 更新标记点颜色
     if(clock.tick == 0){
         let pointed = clock.second
@@ -103,6 +103,6 @@ resetBtn.addEventListener('click', ()=>{
         // 设置文本
         clock.setTime(0, 0, 0, 0)
         time_content.textContent = '00:00:00.0'
-        setGeometry.apply(pointer, [cx, cy - inside_r, 6])
+        setGeometry.apply(pointer, [cx, cy - inside_r, 8])
     }
 })

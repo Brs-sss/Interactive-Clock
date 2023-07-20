@@ -26,7 +26,7 @@
 
         #time {
             position: absolute;
-            top: 322px;
+            top: 326px;
 
             width: 500px;
             height: 100px;
@@ -34,7 +34,8 @@
             vertical-align: middle;
             text-align: center;
 
-            font: normal 500 36px 'Microsoft Yahei', 'PingFang SC' ;
+            font: normal bold 36px 'Courier New', Courier, monospace ;
+            color: blanchedalmond;
         }
 
         #interactive {
@@ -51,20 +52,21 @@
             width: 60px;
             margin: 100px 93px 0px;
 
-            background-color: gainsboro;
+            background-color: lightgray;
             border: 2px black solid;
             border-radius: 10%;
+            box-shadow: 5px, 5px, 2px, 2px, blanchedalmond;
         }
 
-        .controlBtn:hover { background-color: lightgray;}   
-        .controlBtn:active { background-color: silver;}
+        .controlBtn:hover { background-color: darkgray;}   
+        .controlBtn:active { background-color: gray;}
 
         #pause{ background-image: url('../img/play.png'); background-position: center;}
         #reset{ background-image: url('../img/reset.png'); background-position: center; background-repeat: no-repeat;}
     </style>
 </head>
 
-<body>
+<body style="background-color: #333333;">
     <div id="main">
         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="box">
             <!-- <defs>
@@ -74,7 +76,7 @@
                   <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                 </filter>
             </defs> -->
-            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="ghostwhite"></circle>
+            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="gray"></circle>
             <circle stroke="gray" stroke-width="1" fill="DodgerBlue" id="pointer"></circle>
         </svg>
         <div id="time"> 00:00:00.0 </div>
