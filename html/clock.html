@@ -9,11 +9,31 @@
                 display: grid;
                 grid-template-columns: 1fr 500px 1fr;
                 grid-template-rows: 100px 500px 1fr;
+                background: #333333;
+                position: relative;
+            }
+            #container{
+                grid-area: 2/2/3/3;
+                width: 500px;
+                height: 500px;
+                position: relative;
             }
             #main-canvas{
                 grid-area: 2/2/3/3;
-                border: 2px black solid;
+                /* border: 2px black solid; */
                 position: relative;
+                border-radius: 50px;
+                box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),
+                inset 15px 15px 10px rgba(255,255,255,0.75),
+                -15px -15px 35px rgba(255,255,255,0.55),
+                inset -1px -1px 10px rgba(0,0,0,.2);
+                background: #c9d5e0;
+            }
+            #hands{
+                grid-area: 2/2/3/3;
+                position: absolute;
+                left: 0;
+                z-index: 10;
             }
             #numeral-time{
                 grid-area: 3/2/4/3;
@@ -21,7 +41,10 @@
                 font-size: 40pt;
                 position: relative;
                 top: 20px;
-                color: darkblue;
+                color: #279eff;
+                background: transparent;
+                text-shadow: 0 0 10px #279eff;
+
             }
             #set-time-button{
                 grid-area: 3/2/4/3;
@@ -32,22 +55,85 @@
                 height: 30px;
 
             }
+
+            #clock-face{
+                width: 400px;
+                height: 400px;
+                position: absolute;
+                left: 50px;
+                top: 50px;
+                /* inset: 35px; */
+                border-radius: 50%;
+                box-shadow: 5px 5px 15px #152b4a66,
+                inset 5px 5px 5px rgba(255,255,255,0.75),
+                -6px -6px 10px white;
+                z-index: 2;
+
+            }
+
+            .top-layer{
+                z-index: 5;
+            }
+
+            #gradient-ring::before{
+                width: 300px;
+                height: 300px;
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                top: 100px;
+                left: 100px;
+                background: linear-gradient(#2196f3,#e91e63);
+                animation: animate 2s linear infinite;
+                z-index: 3;
+            }
+
+            @keyframes animate
+            {
+                0%{
+                    transform: rotate(360deg);
+                }
+                100%{
+                    transform: rotate(0deg);
+                }
+            }
+
+            #inner-circle{
+                width: 290px;
+                height: 290px;
+                content: "";
+                position: absolute;
+                border-radius: 50%;
+                top: 105px;
+                left: 105px;
+                background: #152b4a;
+                z-index: 5;
+            }
+            
         </style>
 
     </head>
     <body>
-        <svg width="500px" height="500px" id="main-canvas">
-            <!-- 大表盘 -->
-              <circle cx="250" cy="250" r="200" fill="none" fill-opacity="0.6" stroke="black" stroke-width="5" stroke-opacity="0.3" ></circle> 
-            <!-- 中心 -->
-              <circle cx="250" cy="250" r="5" fill="none" fill-opacity="0.6" stroke="red" stroke-width="5" stroke-opacity="0.3"></circle>
-              <!-- 秒针 -->
-              <line id="second-hand" x1="250" y1="250" x2="250" y2="60" stroke="red" stroke-width="2px"></line>
-              <!-- 分针 -->
-              <line id="minute-hand" x1="250" y1="250" x2="250" y2="100" stroke="#800000" stroke-width="4px"></line>
-              <!-- 时针 -->
-              <line id="hour-hand" x1="250" y1="250" x2="250" y2="150" stroke="black" stroke-width="5px"></line>
-        </svg>
+        
+        <div id="container">
+            <div id="clock-face"></div>
+            <div id="gradient-ring"></div>
+            <div id="inner-circle"></div>
+            <svg width="500px" height="500px" id="main-canvas">
+                <!-- 大表盘 -->
+                <circle  cx="250" cy="250" r="200" fill="#152b4a" fill-opacity="1" stroke="black" stroke-width="5" stroke-opacity="0.3" ></circle> 
+                <!-- 中心 -->
+                  <circle cx="250" cy="250" r="5" fill="none" fill-opacity="1" stroke="red" stroke-width="5" stroke-opacity="0.3"></circle>
+            </svg>
+            <svg width="500px" height="500px" id="hands">
+                  <!-- 秒针 -->
+                  <line id="second-hand" class="top-layer" x1="250" y1="250" x2="250" y2="60" stroke="red" stroke-width="2px"></line>
+                  <!-- 分针 -->
+                  <line id="minute-hand" x1="250" y1="250" x2="250" y2="100" stroke="#800000" stroke-width="4px"></line>
+                  <!-- 时针 -->
+                  <line id="hour-hand" x1="250" y1="250" x2="250" y2="150" stroke="white" stroke-width="5px"></line>
+            </svg>
+        </div>
         <div id="numeral-time">00:00:00</div>
         <button type="button" id="set-time-button">设置时间</button>
         <script type="text/javascript" src="../js/clock.js"></script>
