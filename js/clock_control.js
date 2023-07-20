@@ -33,7 +33,7 @@ for(let i=0;i<60;i++)
         newLine.setAttribute('y1',cy-r_mid*Math.cos(Rad(6*i)));
         newLine.setAttribute('x2',cx+r_out*Math.sin(Rad(6*i)));
         newLine.setAttribute('y2',cy-r_out*Math.cos(Rad(6*i)));
-        newLine.setAttribute('stroke','gray');
+        newLine.setAttribute('stroke',' #67af9e');
         newLine.setAttribute('stroke-width','2px');
         lineContainer.appendChild(newLine);
     }
@@ -42,8 +42,8 @@ for(let i=0;i<60;i++)
         newLine.setAttribute('y1',cy-r_in*Math.cos(Rad(6*i)));
         newLine.setAttribute('x2',cx+r_out*Math.sin(Rad(6*i)));
         newLine.setAttribute('y2',cy-r_out*Math.cos(Rad(6*i)));
-        newLine.setAttribute('stroke','black');
-        newLine.setAttribute('stroke-width','5px');
+        newLine.setAttribute('stroke','#00F4E4');
+        newLine.setAttribute('stroke-width','7px');
         lineContainer.appendChild(newLine);
     }
 }
