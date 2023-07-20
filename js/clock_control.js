@@ -23,7 +23,7 @@ function Rad(degree){
 
 ///页面初始化时，绘制所有的表盘刻度（包括大刻度和小刻度）
 var lineContainer=document.createDocumentFragment();
-const cx=250,cy=250,r_in=180,r_mid=190,r_out=200;  //表盘的中心、内径、中径、外径
+const cx=250,cy=250,r_in=170,r_mid=180,r_out=190;  //表盘的中心、内径、中径、外径
 for(let i=0;i<60;i++)
 {
     const newLine=document.createElementNS(svgns,'line');
@@ -33,7 +33,7 @@ for(let i=0;i<60;i++)
         newLine.setAttribute('y1',cy-r_mid*Math.cos(Rad(6*i)));
         newLine.setAttribute('x2',cx+r_out*Math.sin(Rad(6*i)));
         newLine.setAttribute('y2',cy-r_out*Math.cos(Rad(6*i)));
-        newLine.setAttribute('stroke','gray');
+        newLine.setAttribute('stroke',' #67af9e');
         newLine.setAttribute('stroke-width','2px');
         lineContainer.appendChild(newLine);
     }
@@ -42,8 +42,8 @@ for(let i=0;i<60;i++)
         newLine.setAttribute('y1',cy-r_in*Math.cos(Rad(6*i)));
         newLine.setAttribute('x2',cx+r_out*Math.sin(Rad(6*i)));
         newLine.setAttribute('y2',cy-r_out*Math.cos(Rad(6*i)));
-        newLine.setAttribute('stroke','black');
-        newLine.setAttribute('stroke-width','5px');
+        newLine.setAttribute('stroke','#00F4E4');
+        newLine.setAttribute('stroke-width','7px');
         lineContainer.appendChild(newLine);
     }
 }
@@ -68,14 +68,18 @@ function drawAngle(degree,radius)
 let secondHand=document.getElementById('second-hand');
 let minuteHand=document.getElementById('minute-hand');
 let hourHand=document.getElementById('hour-hand');
+// 获取假的秒针 分针 时针的元素
+let fake_secondHand=document.getElementById('fake-second-hand');
+let fake_minuteHand=document.getElementById('fake-minute-hand');
+let fake_hourHand=document.getElementById('fake-hour-hand');
 //设定秒针 分针 时针的长度
-const r_sec=190, r_min=150, r_hour=100;
+const r_sec=190, r_min=160, r_hour=100;
 
 //新建控制图形表盘的clock
 let clock=new Clock();
 
 /**
- * 将时分秒绘制到页面上  具体画的样式由drawAngle规定。每个表盘可以实现不同的绘制方法
+ * 将时分秒（以及假的）绘制到页面上  具体画的样式由drawAngle规定。每个表盘可以实现不同的绘制方法
  * @param {*} hour_angle 
  * @param {*} minute_angle 
  * @param {*} second_angle 
@@ -84,6 +88,9 @@ function drawClock(hour_angle, minute_angle, second_angle) {
     drawAngle.apply(secondHand,[second_angle,r_sec])
     drawAngle.apply(minuteHand,[minute_angle,r_min])
     drawAngle.apply(hourHand,[hour_angle,r_hour])
+    drawAngle.apply(fake_secondHand,[second_angle,r_sec])
+    drawAngle.apply(fake_minuteHand,[minute_angle,r_min])
+    drawAngle.apply(fake_hourHand,[hour_angle,r_hour])
 }
 
 //画数字显示器
@@ -104,7 +111,7 @@ function clockRun() {
     clock.jumpToNextTick()
 },50)}
 
-const initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
+let initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那一次运行的函数id
 //可以用
 
 
@@ -126,9 +133,12 @@ function addMouseEvent(degree) {
 
     this.addEventListener('mousedown', (event)=> {
         dragging = true
+        this.style.cursor = 'grab' // 改变光标的样式
         delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
         delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top); // 获得中心点在整个窗口中的坐标
+        //clearInterval(initial_run_id)
         window.addEventListener('mouseup', (event) => {
+            //initial_run_id=clockRun()
             dragging = false
         })
     })
@@ -142,18 +152,34 @@ function addMouseEvent(degree) {
             console.log('angles: ', angles)
             delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
             delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top);
+            let index = 0; // 时针：0 分针：1 秒针：2
+            if (degree==6) index = 2
+            else if (degree==6/60) index = 1
+            else if (degree==30/(60*60)) index = 0
             delta_angle = function(){
                 temp_angle = Math.atan2(Math.abs(delta_x), Math.abs(delta_y))
-                // console.log('raw angle: ', temp_angle)
                 if (delta_x>=0 && delta_y>=0) return Math.PI-temp_angle
-                if (delta_x>=0 && delta_y<0)  return temp_angle
+                if (delta_x>=0 && delta_y<0) {
+                    if (angles[index]>=350) {
+                        console.log('special', [angles[index],  2*Math.PI+temp_angle, (2*Math.PI+temp_angle)*180/Math.PI, (2*Math.PI+temp_angle)*180/Math.PI-angles[index]])
+                        return 2*Math.PI+temp_angle
+                    } 
+                      return temp_angle
+                }
                 if (delta_x<0 && delta_y>=0)  return Math.PI+temp_angle
-                else return 2*Math.PI-temp_angle
+                else if (delta_x<0 && delta_y<0) {
+                    console.log('<0 <0', [angles[index]<=10, angles[index]])
+                    if (angles[index]<=10) {
+                        console.log('special', -1*temp_angle)
+                        return -1*temp_angle
+                    } 
+                    return 2*Math.PI-temp_angle
+                } 
+                
             } 
-            if (degree==6) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[2])/degree*20)
-            else if (degree==6/60) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[1])/degree*20)
-            else if (degree==30/(60*60)) clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[0])/degree*20)
-            // console.log("new global_tick: ", clock.global_tick)
+            if (current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20) < 0) clock.global_tick = 0
+            else clock.global_tick = current_ticks+parseInt((180*delta_angle()/Math.PI-angles[index])/degree*20)
+            console.log("new global_tick: ", clock.global_tick)
         }
     })
     
@@ -167,9 +193,13 @@ function addClockEventListener() {
     minuteHand.draggable = true
     hourHand.draggable = true
     
-    addMouseEvent.apply(secondHand, [6])
-    addMouseEvent.apply(minuteHand, [6/60])
+    // addMouseEvent.apply(secondHand, [6])
+    // addMouseEvent.apply(minuteHand, [6/60])
     addMouseEvent.apply(hourHand, [30/(60*60)])
+
+    addMouseEvent.apply(fake_secondHand, [6])
+    addMouseEvent.apply(fake_minuteHand, [6/60])
+    addMouseEvent.apply(fake_hourHand, [30/(60*60)])
 }
 
 addClockEventListener()

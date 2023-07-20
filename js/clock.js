@@ -27,7 +27,7 @@ class Clock{
         g = Math.floor(g / 60)
         this.minute = g % 60
         g = Math.floor(g / 60)
-        this.hour = g % 12
+        this.hour = g % 24
     }
 
     /**
@@ -44,7 +44,7 @@ class Clock{
                 if(this.minute === 60){
                     this.minute = 0;
                     this.hour++;
-                    if(this.hour === 12){
+                    if(this.hour === 24){
                         this.hour = 0;
                     }
                 }
