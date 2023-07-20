@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>定时器</title>
+    <style>
+        #main {
+            position: absolute;
+            left: calc(50vw - 250px);
+            top: 0;
+            
+            width: 500px;
+            height: 100vh;
+        }
+
+        .box {
+            position: absolute;
+            top: 100px;
+
+            width: 500px;
+            height: 500px;
+
+            /* border: 2px black solid; */
+        }
+
+        #time {
+            position: absolute;
+            top: 322px;
+
+            width: 500px;
+            height: 100px;
+            line-height: 500px;
+            vertical-align: middle;
+            text-align: center;
+
+            font: normal 500 36px 'Microsoft Yahei', 'PingFang SC' ;
+        }
+
+        #interactive {
+            position: absolute;
+            top: 600px;
+
+            width: 500px;
+        }   
+
+        .controlBtn {
+            display: inline;
+
+            height: 60px;
+            width: 60px;
+            margin: 100px 93px 0px;
+
+            background-color: gainsboro;
+            border: 2px black solid;
+            border-radius: 10%;
+        }
+
+        .controlBtn:hover { background-color: lightgray;}   
+        .controlBtn:active { background-color: silver;}
+
+        #pause{ background-image: url('../img/play.png'); background-position: center;}
+        #reset{ background-image: url('../img/reset.png'); background-position: center; background-repeat: no-repeat;}
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="box">
+            <!-- <defs>
+                <filter id="f1" x="0" y="0" width="200%" height="200%">
+                  <feOffset result="offOut" in="SourceAlpha" dx="8" dy="8" />
+                  <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
+                  <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+                </filter>
+            </defs> -->
+            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="ghostwhite"></circle>
+            <circle stroke="gray" stroke-width="1" fill="DodgerBlue" id="pointer"></circle>
+        </svg>
+        <div id="time"> 00:00:00.0 </div>
+        <div id="interactive">
+            <button class="controlBtn" id="pause"></button>
+            <button class="controlBtn" id="reset"></button>
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/clock.js"></script>
+    <script type="text/javascript" src="../js/timer_control.js"></script>
+</body>
+</html>
