@@ -23,7 +23,7 @@ function Rad(degree){
 
 ///页面初始化时，绘制所有的表盘刻度（包括大刻度和小刻度）
 var lineContainer=document.createDocumentFragment();
-const cx=250,cy=250,r_in=180,r_mid=190,r_out=200;  //表盘的中心、内径、中径、外径
+const cx=250,cy=250,r_in=170,r_mid=180,r_out=190;  //表盘的中心、内径、中径、外径
 for(let i=0;i<60;i++)
 {
     const newLine=document.createElementNS(svgns,'line');
@@ -69,7 +69,7 @@ let secondHand=document.getElementById('second-hand');
 let minuteHand=document.getElementById('minute-hand');
 let hourHand=document.getElementById('hour-hand');
 //设定秒针 分针 时针的长度
-const r_sec=190, r_min=150, r_hour=100;
+const r_sec=190, r_min=160, r_hour=100;
 
 //新建控制图形表盘的clock
 let clock=new Clock();
@@ -126,6 +126,7 @@ function addMouseEvent(degree) {
 
     this.addEventListener('mousedown', (event)=> {
         dragging = true
+        this.style.cursor = 'grab' // 改变光标的样式
         delta_x = event.clientX - (cx+canvas.getBoundingClientRect().left);
         delta_y = event.clientY - (cy+canvas.getBoundingClientRect().top); // 获得中心点在整个窗口中的坐标
         //clearInterval(initial_run_id)
