@@ -23,7 +23,7 @@ function Rad(degree){
 
 ///页面初始化时，绘制所有的表盘刻度（包括大刻度和小刻度）
 var lineContainer=document.createDocumentFragment();
-const cx=250,cy=250,r_in=170,r_mid=180,r_out=190;  //表盘的中心、内径、中径、外径
+const cx=200,cy=200,r_in=120,r_mid=130,r_out=140;  //表盘的中心、内径、中径、外径
 for(let i=0;i<60;i++)
 {
     const newLine=document.createElementNS(svgns,'line');
@@ -73,7 +73,7 @@ let fake_secondHand=document.getElementById('fake-second-hand');
 let fake_minuteHand=document.getElementById('fake-minute-hand');
 let fake_hourHand=document.getElementById('fake-hour-hand');
 //设定秒针 分针 时针的长度
-const r_sec=190, r_min=160, r_hour=100;
+const r_sec=140, r_min=90, r_hour=60;
 
 //新建控制图形表盘的clock
 let clock=new Clock();
@@ -142,7 +142,12 @@ function addMouseEvent(degree) {
             //initial_run_id=clockRun()
             dragging = false
         })
+        this.addEventListener('mouseup', (event) => {
+            //initial_run_id=clockRun()
+            dragging = false
+        })
     })
+    
 
     window.addEventListener('mousemove', (event) => {
         if(dragging) { // 获得此时的时间
@@ -222,6 +227,7 @@ let sun=document.getElementById('sun');
 
 sun.addEventListener('click', (event) => {
     document.getElementById('body').style.background = '#d9dbcd';
+    console.log('sun')
     document.getElementById('numeral-time').style.color = '#152b4a'
     document.getElementById('numeral-time').style.textShadow = '0 0 10px #152b4a'
     sun.style.display = 'none';
