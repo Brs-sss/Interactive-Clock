@@ -224,10 +224,10 @@ function addClockEventListener() {
 addClockEventListener()
 
 let sun=document.getElementById('sun');
+let moon=document.getElementById('moon')
 
 sun.addEventListener('click', (event) => {
     document.getElementById('body').style.background = '#d9dbcd';
-    console.log('sun')
     document.getElementById('numeral-time').style.color = '#152b4a'
     document.getElementById('numeral-time').style.textShadow = '0 0 10px #152b4a'
     sun.style.display = 'none';
