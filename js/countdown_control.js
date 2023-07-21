@@ -53,7 +53,6 @@ let clock=new Clock;
 // 画环形条缩减
 function drawClock() {
     let percentage = clock.global_tick / origin_tick
-    console.log(percentage)
     setRingPercentage.apply(progress_ring,[percentage])
     setBallPosition.apply(ball,[1-percentage])
 }
@@ -126,16 +125,22 @@ pause_btn.addEventListener('click', ()=>{
 
 // 交互部分——重置
 reset_btn.addEventListener('click', ()=>{
-    clock.setTime(...time)
-    drawClock()
-    drawNumerialTime()
+    for(let num of time){
+        if(num != 0){
+            clock.setTime(...time)
+            drawClock()
+            drawNumerialTime()
+            return
+        }
+    }
 })
 
 // 交互部分——删除
 cancel_btn.addEventListener('click', ()=>{
+    time = [0, 0, 0, 0]
     clock.setTime(0, 0, 0, 0)
     setRingPercentage.apply(progress_ring, [1])
-    setBallPosition.apply(ball, [0])
+    setBallPosition.apply(ball, [1])
     drawNumerialTime()
     if(timer !== undefined){
         pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
