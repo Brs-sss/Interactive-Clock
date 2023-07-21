@@ -23,7 +23,7 @@ function setGeometry(cx, cy, r){
 // 页面初始化 —— 表盘绘制
 var circleContainer = document.createDocumentFragment()
 let marks = [], marks_color = []
-const cx = 250, cy = 250, r = 180, dot_r = 4 //表盘的中心、内径、半径
+const cx = 250, cy = 250, r = 180, dot_r = 5 //表盘的中心、内径、半径
 for(let i = 0; i < 60; i++)
 {
     let newCircle = document.createElementNS(svgns, 'circle')
@@ -42,7 +42,7 @@ box.append(circleContainer);
 
 // 表针绘制
 let pointer = document.querySelector('#pointer');
-const inside_r = 160
+const inside_r = 155
 setGeometry.apply(pointer, [cx, cy - inside_r, 8])
 
 // 动画效果制作

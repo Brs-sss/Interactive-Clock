@@ -34,6 +34,7 @@
             vertical-align: middle;
             text-align: center;
 
+
             font: normal bold 36px 'Courier New', Courier, monospace ;
             color: blanchedalmond;
         }
@@ -50,19 +51,63 @@
 
             height: 60px;
             width: 60px;
-            margin: 100px 93px 0px;
 
             background-color: lightgray;
             border: 2px black solid;
             border-radius: 10%;
-            box-shadow: 5px, 5px, 2px, 2px, blanchedalmond;
+            box-shadow: 5px 5px 10px blanchedalmond;
+
+            transition: all 0.4s ease 0s;
         }
 
-        .controlBtn:hover { background-color: darkgray;}   
+        .controlBtn:hover { 
+            background-color: darkgray;}   
         .controlBtn:active { background-color: gray;}
 
-        #pause{ background-image: url('../img/play.png'); background-position: center;}
-        #reset{ background-image: url('../img/reset.png'); background-position: center; background-repeat: no-repeat;}
+        #pause{ 
+            position: absolute;
+            top: 60px; left: 110px;
+            background-image: url('../img/play.png'); 
+            background-position: center;
+        }
+        #reset{ 
+            position: absolute;
+            top: 60px; left: 330px;
+            background-image: url('../img/reset.png'); 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+
+        @keyframes move {
+            0% { left: 120px; width: 260px; }
+            25% { left: 290px; width: 90px; }
+            50% { left: 120px; width: 260px; }
+            75% { left: 120px; width: 90px; }
+            100% { left: 120px; width: 260px; }
+        }
+
+        #blue_bar{
+            position: absolute;
+            top: 375px;
+            left: 115px;
+            width: 260px;
+            height: 10px;
+
+            background-color: #2196f3;
+            animation: move 5s ease-in-out 0s infinite;
+        }
+
+        #red_bar{
+            position: absolute;
+            top: 385px;
+            left: 115px;
+            width: 260px;
+            height: 10px;
+
+            background-color: #e91e63;
+            animation: move 5s ease-in-out 0s infinite reverse;
+        }
+
     </style>
 </head>
 
@@ -76,9 +121,11 @@
                   <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                 </filter>
             </defs> -->
-            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="gray"></circle>
+            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="CadetBlue"></circle>
             <circle stroke="gray" stroke-width="1" fill="DodgerBlue" id="pointer"></circle>
         </svg>
+        <div id="blue_bar"></div>
+        <div id="red_bar"></div>
         <div id="time"> 00:00:00.0 </div>
         <div id="interactive">
             <button class="controlBtn" id="pause"></button>
