@@ -111,7 +111,7 @@
           <li class="active"><a id="clock"><ion-icon name="time-outline"></ion-icon></a></li>
           <li><a id="countdown"><ion-icon name="timer-outline"></ion-icon></a></li>
           <li><a id="stopwatch"><ion-icon name="stopwatch-outline"></ion-icon></a></li>
-          <li><a href=""><ion-icon name="alarm-outline"></ion-icon></a></li>
+          <li><a id="alarmclock"><ion-icon name="alarm-outline"></ion-icon></a></li>
           <div id="marker"></div>
         </ul>
       </nav>
@@ -130,7 +130,9 @@
         stopwatch.addEventListener('click', () => {
             page_container.src = "stopwatch.html";
         })
-        
+        alarmclock.addEventListener('click', () => {
+            page_container.src = "alarmclock.html";
+        })
 
 
         function moveIndicator(e) {
