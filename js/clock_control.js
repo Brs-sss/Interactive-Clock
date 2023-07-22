@@ -73,7 +73,7 @@ let fake_secondHand=document.getElementById('fake-second-hand');
 let fake_minuteHand=document.getElementById('fake-minute-hand');
 let fake_hourHand=document.getElementById('fake-hour-hand');
 //设定秒针 分针 时针的长度
-const r_sec=140, r_min=90, r_hour=60;
+const r_sec=140, r_min=105, r_hour=60;
 
 //新建控制图形表盘的clock
 let clock=new Clock();
