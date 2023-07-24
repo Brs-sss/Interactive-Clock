@@ -77,10 +77,11 @@ window.onload = function () {
     var input = document.getElementsByTagName("input")[0];
     var text = document.getElementsByClassName("empty-todos")[0];
     var hidden = document.getElementsByClassName("hidden")[0];
+  
     load();
 
     // 点击submit按钮
-    btn.onmousedown = function () {
+      btn.onmousedown = function () {
       // 点击按钮后阴影消失
       btn.className = btn.className.replace(" submit-btn1", "");
    
@@ -88,8 +89,23 @@ window.onload = function () {
       if (input.value.trim()) {
         // 先读取本地存储原来的数据
         var local = getData();
+        var hour_bar = document.querySelector('#hour_bar').value
+        var minute_bar = document.querySelector('#minute_bar').value
+        var second_bar = document.querySelector('#second_bar').value
+
+        if(hour_bar<10){
+          hour_bar="0"+hour_bar;
+        }
+        if(minute_bar<10){
+          minute_bar="0"+minute_bar;
+        }
+        if(second_bar<10){
+          second_bar="0"+second_bar;
+        }
+        
+        var inputtime=hour_bar + ":" + minute_bar + ":" + second_bar;
         // 当输入时，先更新数组，再替换本地存储
-        local.push({ text: input.value, done: false});
+        local.push({ text: input.value, time: inputtime, done: false});
         saveData(local);
    
         // 渲染加载数据
@@ -102,7 +118,7 @@ window.onload = function () {
         var arr = [];
         data = data.filter((item) => item.done == false);
         data.forEach((element, index) => {
-            if(element.text==time_now){
+            if(element.time==time_now){
                 alert(time_now+"的闹钟时间到了");
             }
         });
@@ -119,10 +135,10 @@ window.onload = function () {
       var arr = [];
       data = data.filter((item) => item.done == false);
       data.forEach((element, index) => {
-      str ='<li class="todo-item"><div class="todo-text">' +
-            element.text +
-            '</div><i class="iconfont del">&#xe61d;</i></div></li>' +
-            str;
+      str ='<li class="todo-item" style="margin-left: 5px;box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),inset 15px 15px 10px rgba(255,255,255,0.75),-15px -15px 35px rgba(255,255,255,0.55),inset -1px -1px 10px rgba(0,0,0,.2);background: #c9d5e0;"><div class="todo-text">闹钟' +
+            element.text +'</div><div class="todo-time">' + 
+            element.time + 
+            '</div><i class="iconfont del">&#xe61d;</i></div></li>';
       });
    
       input.value = "";
