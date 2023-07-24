@@ -63,7 +63,7 @@ function drawNumerialTime() {
 }
 
 // 倒计时运行控制
-let timer
+let timer = undefined
 let origin_tick
 let counting = false
 function run(){
@@ -146,6 +146,7 @@ cancel_btn.addEventListener('click', ()=>{
         pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
         clearInterval(timer)
         counting = false
+        timer = undefined
     }
 })
 
