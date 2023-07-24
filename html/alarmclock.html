@@ -21,7 +21,7 @@
             padding: 50px 0;
             /* 铺满屏幕 */
             min-height: 100vh;
-           display: flex;
+            display: flex;
             justify-content: center;
             align-items: center;
             background-color: #333333;
@@ -64,6 +64,28 @@
         .form-field {
             margin-top: 25px;
         }
+
+        .interactive{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            /* border: 2px navajowhite solid; */
+        }
+
+        .time_bar{
+            position: relative;
+            top: 15px; 
+            height: 40px;
+            width: 75px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+            background-color: lightgray;
+            border-radius: 4px;
+            border-color: #c9d5e0;
+        }
+
+
         .title {
             font-size: 22px;
             margin-bottom: 18px;
@@ -179,12 +201,21 @@
             <h1 class="title">此处设置闹钟</h1>
             <form class="form-wrapper">
             <div class="form-input">
-              <input placeholder="添加新的闹钟..." />
+              <input placeholder="设置闹钟名称..." />
             </div>
             <button type="button" class="submit-btn submit-btn1">
               <span>确定</span>
             </button>
           </form>
+          <div class="interactive" id="set_time_area">
+            <div class="seperator"></div>
+            <input type="number" placeholder="hour" min="0" value="0" class="time_bar" id="hour_bar">
+            <div class="seperator">:</div>
+            <input type="number" placeholder="minute" min="0" max="59" value="0" class="time_bar" id="minute_bar">
+            <div class="seperator">:</div>
+            <input type="number" placeholder="second" min="0" max="59" value="0" class="time_bar" id="second_bar">
+            <div class="seperator"></div>
+        </div>
         </div>
  
         <!-- text -->
@@ -203,7 +234,6 @@
         </div>
  
         <div class="hidden"> 
-          <!-- todolist -->
           <ul class="todo-list"></ul>
  
         </div>
