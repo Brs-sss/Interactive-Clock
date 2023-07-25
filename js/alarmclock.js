@@ -51,7 +51,7 @@ function showLocalTime() {
     xqObj.innerHTML=day;
     riqiObj.innerHTML=date;
     nianObj.innerHTML=year;
-    yueObj.innerHTML=month;
+    yueObj.innerHTML=month+1;
     
     
 
@@ -110,6 +110,8 @@ window.onload = function () {
    
         // 渲染加载数据
         load();
+      }else{
+        alert("请输入闹钟名称");
       }
     };
     
@@ -135,10 +137,10 @@ window.onload = function () {
       var arr = [];
       data = data.filter((item) => item.done == false);
       data.forEach((element, index) => {
-      str ='<li class="todo-item" style="margin-left: 5px;box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),inset 15px 15px 10px rgba(255,255,255,0.75),-15px -15px 35px rgba(255,255,255,0.55),inset -1px -1px 10px rgba(0,0,0,.2);background: #c9d5e0;"><div class="todo-text">闹钟' +
+            str ='<li class="todo-item" style="margin-left: 5px; box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),inset 15px 15px 10px rgba(255,255,255,0.75),-15px -15px 35px rgba(255,255,255,0.55),inset -1px -1px 10px rgba(0,0,0,.2);background: #c9d5e0;"><div class="todo-text">闹钟' +
             element.text +'</div><div class="todo-time">' + 
             element.time + 
-            '</div><i class="iconfont del">&#xe61d;</i></div></li>';
+            '</div><i class="iconfont del">&#xe61d;</i></div></li>' + str;
       });
    
       input.value = "";
