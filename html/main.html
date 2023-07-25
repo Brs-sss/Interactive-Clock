@@ -17,11 +17,10 @@
         }
         /* 页面容器样式 */
         #page-container {
-          position: relative;
+          position: absolute;
           width: 100%;
           height: 600px;
           overflow: hidden;
-          margin: 0;
           padding: 0;
         }
         ul {
@@ -105,7 +104,6 @@
       </style>
 </head>
 <body>
-    <!-- <div id="page-container"></div> -->
     <nav>
         <ul>
           <li class="active"><a id="clock"><ion-icon name="time-outline"></ion-icon></a></li>
@@ -121,18 +119,74 @@
         let list = document.querySelectorAll('ul li');
         let stopwatch = document.getElementById('stopwatch');
         let page_container = document.getElementById('page-container')
+        var position = 1;
+
         clock.addEventListener('click', () => {
+            if(position > 1){
+                page_container.style.left = '-1000px';
+                animateright(page_container, 0);
+            }
             page_container.src = "clock.html";
+            position = 1;
         })
         countdown.addEventListener('click', () => {
+            if(position > 2){
+                page_container.style.left = '-1000px';
+                animateright(page_container, 0);
+            }
+            if(position < 2){
+                page_container.style.left = '1000px';
+                animateleft(page_container, 0);
+            }
             page_container.src = "countdown.html";
+            position = 2;
         })
         stopwatch.addEventListener('click', () => {
+            if(position > 3){
+                page_container.style.left = '-1000px';
+                animateright(page_container, 0);
+            }
+            if(position < 3){
+                page_container.style.left = '1000px';
+                animateleft(page_container, 0);
+            }
             page_container.src = "stopwatch.html";
+            position = 3;
         })
         alarmclock.addEventListener('click', () => {
+            if(position < 4){
+                page_container.style.left = '1000px';
+                animateleft(page_container, 0);
+            }
             page_container.src = "alarmclock.html";
+            position = 4;
         })
+
+        function animateright(obj, target, callback) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                var step = (target - obj.offsetLeft) / 10;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                if (obj.offsetLeft == target) {
+                    clearInterval(obj.timer);
+                    callback();
+                }
+                obj.style.left = obj.offsetLeft + step + 'px';
+            }, 30);
+        }
+
+        function animateleft(obj, target, callback) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                var step = (target - obj.offsetLeft) / 10;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                if (obj.offsetLeft == target) {
+                    clearInterval(obj.timer);
+                    callback();
+                }
+                obj.style.left = obj.offsetLeft + step + 'px';
+            }, 30);
+        }
 
 
         function moveIndicator(e) {
