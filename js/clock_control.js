@@ -223,24 +223,7 @@ function addClockEventListener() {
 
 addClockEventListener()
 
-let sun=document.getElementById('sun');
-let moon=document.getElementById('moon')
 
-sun.addEventListener('click', (event) => {
-    document.getElementById('body').style.background = '#d9dbcd';
-    document.getElementById('numeral-time').style.color = '#152b4a'
-    document.getElementById('numeral-time').style.textShadow = '0 0 10px #152b4a'
-    sun.style.display = 'none';
-    moon.style.display = 'block'
-})
-
-moon.addEventListener('click', (event) => {
-    document.getElementById('body').style.background = '#333333';
-    document.getElementById('numeral-time').style.color = '#00f4e4'
-    document.getElementById('numeral-time').style.textShadow = '0 0 10px #00f4e4';
-    moon.style.display = 'none';
-    sun.style.display = 'block'
-})
 
 
 
