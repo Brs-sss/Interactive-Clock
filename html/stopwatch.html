@@ -16,7 +16,7 @@
 
         .box {
             position: absolute;
-            top: 100px;
+            top: 10px;
 
             width: 500px;
             height: 500px;
@@ -26,7 +26,7 @@
 
         #time {
             position: absolute;
-            top: 326px;
+            top: 236px;
 
             width: 500px;
             height: 100px;
@@ -41,7 +41,7 @@
 
         #interactive {
             position: absolute;
-            top: 600px;
+            top: 510px;
 
             width: 500px;
         }   
@@ -66,35 +66,35 @@
 
         #pause{ 
             position: absolute;
-            top: 60px; left: 110px;
+            left: 120px;
             background-image: url('../img/play.png'); 
             background-position: center;
-            box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),
+            /* box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),
             inset 15px 15px 10px rgba(255,255,255,0.75),
             -15px -15px 35px rgba(255,255,255,0.55),
-            inset -1px -1px 10px rgba(0,0,0,.2);
+            inset -1px -1px 10px rgba(0,0,0,.2); */
         }
         #reset{ 
             position: absolute;
-            top: 60px; left: 330px;
+            left: 320px;
             background-image: url('../img/reset.png'); 
             background-position: center; 
             background-repeat: no-repeat;
         }
 
         @keyframes move {
-            0% { left: 120px; width: 260px; }
-            25% { left: 290px; width: 90px; }
-            50% { left: 120px; width: 260px; }
-            75% { left: 120px; width: 90px; }
-            100% { left: 120px; width: 260px; }
+            0% { left: 145px; width: 210px; }
+            25% { left: 275px; width: 80px; }
+            50% { left: 145px; width: 210px; }
+            75% { left: 145px; width: 80px; }
+            100% { left: 145px; width: 210px; }
         }
 
         #blue_bar{
             position: absolute;
-            top: 375px;
-            left: 115px;
-            width: 260px;
+            top: 285px;
+            left: 145px;
+            width: 210px;
             height: 10px;
 
             background-color: #2196f3;
@@ -103,9 +103,9 @@
 
         #red_bar{
             position: absolute;
-            top: 385px;
-            left: 115px;
-            width: 260px;
+            top: 295px;
+            left: 145px;
+            width: 210px;
             height: 10px;
 
             background-color: #e91e63;
@@ -125,7 +125,7 @@
                   <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                 </filter>
             </defs> -->
-            <circle cx="250" cy="250" r="200" stroke="gray" stroke-width="1" fill="CadetBlue"></circle>
+            <circle cx="250" cy="250" r="180" stroke="gray" stroke-width="1" fill="CadetBlue"></circle>
             <circle stroke="gray" stroke-width="1" fill="DodgerBlue" id="pointer"></circle>
         </svg>
         <div id="blue_bar"></div>

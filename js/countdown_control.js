@@ -21,9 +21,17 @@ let pause_btn = document.querySelector("#pause")
 let reset_btn = document.querySelector("#reset")
 let cancel_btn = document.querySelector("#cancel")
 
+// 获取区域
+let set_time_area = document.querySelector("#set_time_area")
+let btn_area = document.querySelector("#button_area")
+btn_area.style.visibility="hidden";
+
+// 获取结束音频
+let timeup = document.querySelector("#timeup")
+
 /*---------------------------------*/
 
-const cx=250,cy=250,r=200; 
+const cx=200,cy=200,r=160; 
 
 // 环形的完整周长
 let length = 2 * Math.PI * progress_ring.getAttribute("r")
@@ -71,6 +79,9 @@ function run(){
     drawNumerialTime()
     if(clock.global_tick <= 0){
         setTimeout(()=>{alert("时间终了！")}, 50)
+        timeup.play()
+        set_time_area.style.visibility="visible";
+        btn_area.style.visibility="hidden";
         pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
         clearInterval(timer)
         timer = undefined
@@ -105,6 +116,8 @@ submit_btn.addEventListener('click',()=>{
     clock.setTime(...time) //给clock设置时间
     origin_tick = clock.global_tick
     if(timer === undefined){
+        set_time_area.style.visibility="hidden";
+        btn_area.style.visibility="visible";
         timer = setInterval("run()", 50)
         counting = true
     }
@@ -143,6 +156,8 @@ cancel_btn.addEventListener('click', ()=>{
     setBallPosition.apply(ball, [1])
     drawNumerialTime()
     if(timer !== undefined){
+        set_time_area.style.visibility="visible";
+        btn_area.style.visibility="hidden";
         pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
         clearInterval(timer)
         counting = false

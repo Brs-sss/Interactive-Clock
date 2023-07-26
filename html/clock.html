@@ -56,19 +56,11 @@
             #set-time-button{
                 grid-area: 4/2/5/5;
                 position: relative;
-                top: 25px;
+                top: 20px;
                 left: 400px;
-                width: 100px;
-                height: 40px;
-                font-size: large;
-                font-weight: bold;
-                font-family: 'Courier New', Courier, monospace;
-                border-radius: 5px;
-                box-shadow: 5px 5px 20px rgba(61, 139, 255, 0.5),
-                inset 15px 15px 10px rgba(255,255,255,0.75),
-                -15px -15px 35px rgba(255,255,255,0.55),
-                inset -1px -1px 10px rgba(0,0,0,.2);
-                background: #c9d5e0;
+                width: 60px;
+                height: 30px;
+
             }
 
             #clock-face{
@@ -134,13 +126,9 @@
                 height: 64px;
                 /* font-size: 32px; */
                 background-color: transparent;
-                border: none;
-                outline: none;
-                cursor: pointer;
-                z-index: 9;
             }
-            #sun{ background-image: url('../img/sun.png'); background-repeat: no-repeat; }
-            #moon{ background-image: url('../img/moon.png'); background-repeat: no-repeat; display: none;}
+            #sun{ background-image: url('../img/sun.png'); background-position: center; background-repeat: no-repeat;}
+            #moon{ background-image: url('../img/moon.png'); background-position: center; background-repeat: no-repeat; display:none;}
             
         </style>
 
@@ -158,20 +146,20 @@
                 <!-- 大表盘 -->
                 <circle  cx="200" cy="200" r="150" fill="#152b4a" fill-opacity="1" stroke="black" stroke-width="5" stroke-opacity="0.3" ></circle> 
                 <!-- 中心 -->
-                <circle cx="200" cy="200" r="5" fill="none" fill-opacity="1" stroke="red" stroke-width="5" stroke-opacity="0.3"></circle>
+                  <circle cx="200" cy="200" r="5" fill="none" fill-opacity="1" stroke="red" stroke-width="5" stroke-opacity="0.3"></circle>
             </svg>
             <svg width="400px" height="400px" id="hands">
                   <!-- 秒针 长度140-->
                   <line id="second-hand" class="top-layer" x1="200" y1="200" x2="200" y2="110" stroke="red" stroke-width="2px" stroke-linecap="round"></line>
-                  <!-- 分针 长度105-->
-                  <line id="minute-hand" x1="200" y1="200" x2="200" y2="95" stroke="#bdbbbb" stroke-width="4px" stroke-linecap="round"></line>
+                  <!-- 分针 长度90-->
+                  <line id="minute-hand" x1="200" y1="200" x2="200" y2="140" stroke="#bdbbbb" stroke-width="4px" stroke-linecap="round"></line>
                   <!-- 时针 长度60-->
                   <line id="hour-hand" x1="200" y1="200" x2="200" y2="140" stroke="#fdfdfd" stroke-width="5.5px" stroke-linecap="round"></line>
                   <!-- 设置假的时针分针秒针，有利于拖动的时候检测到边缘情况，让拖动更容易 -->
                   <!-- 假的秒针 -->
                   <line id="fake-second-hand" class="top-layer" x1="200" y1="200" x2="200" y2="110" stroke="rgba(0,0,0,0)" stroke-width="20px" stroke-linecap="round"></line>
                   <!-- 假的分针 -->
-                  <line id="fake-minute-hand" x1="200" y1="200" x2="200" y2="90" stroke="rgba(0,0,0,0)" stroke-width="20px" stroke-linecap="round"></line>
+                  <line id="fake-minute-hand" x1="200" y1="200" x2="200" y2="140" stroke="rgba(0,0,0,0)" stroke-width="20px" stroke-linecap="round"></line>
                   <!-- 假的时针 -->
                   <line id="fake-hour-hand" x1="200" y1="200" x2="200" y2="130" stroke="#rgba(0,0,0,0)" stroke-width="20px" stroke-linecap="round"></line>
             </svg>
