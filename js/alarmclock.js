@@ -87,11 +87,16 @@ window.onload = function () {
    
       // 输入框不为空s
       if (input.value.trim()) {
+        
         // 先读取本地存储原来的数据
         var local = getData();
-        var hour_bar = document.querySelector('#hour_bar').value
-        var minute_bar = document.querySelector('#minute_bar').value
-        var second_bar = document.querySelector('#second_bar').value
+        var hour_bar = Number(document.querySelector('#hour_bar').value);
+        var minute_bar = Number(document.querySelector('#minute_bar').value);
+        var second_bar = Number(document.querySelector('#second_bar').value);
+
+        if(hour_bar<24 && hour_bar>=0 && minute_bar<60 && minute_bar>=0 && second_bar<60 && second_bar>=0){
+
+        
 
         if(hour_bar<10){
           hour_bar="0"+hour_bar;
@@ -110,6 +115,9 @@ window.onload = function () {
    
         // 渲染加载数据
         load();
+        }else{
+          alert("时间不合法，请重新输入");
+        }
       }else{
         alert("请输入闹钟名称");
       }
