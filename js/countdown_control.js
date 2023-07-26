@@ -112,6 +112,11 @@ submit_btn.addEventListener('click',()=>{
         alert("请设置时间非0！")
         return
     }
+    if(time[1] < 0 || time[1] >= 60 || time[2] < 0 || time[2] > 60){
+        alert("请设置分、秒数小于60！")
+        return
+    }
+    // 开始设置
     pause_btn.style['background-image'] = 'url(\'../img/pause.png\')'
     clock.setTime(...time) //给clock设置时间
     origin_tick = clock.global_tick
@@ -155,7 +160,7 @@ cancel_btn.addEventListener('click', ()=>{
     setRingPercentage.apply(progress_ring, [1])
     setBallPosition.apply(ball, [1])
     drawNumerialTime()
-    if(timer !== undefined){
+    if(counting){
         set_time_area.style.visibility="visible";
         btn_area.style.visibility="hidden";
         pause_btn.style['background-image'] = 'url(\'../img/play.png\')'
