@@ -123,13 +123,15 @@ window.onload = function () {
       }
     };
     
+    let timeup = document.querySelector("#timeup")
     var mySet=setInterval(function () {
         var data = getData();
         var arr = [];
         data = data.filter((item) => item.done == false);
         data.forEach((element, index) => {
             if(element.time==time_now){
-                alert(time_now+"的闹钟时间到了");
+              setTimeout(()=>{alert(time_now+"的闹钟时间到了")}, 50)
+              timeup.play();
             }
         });
     },1000)
