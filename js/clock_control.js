@@ -60,7 +60,6 @@ function drawAngle(degree,radius)
 {
     this.setAttribute('x2',cx+radius*Math.sin(Rad(degree)));
     this.setAttribute('y2',cy-radius*Math.cos(Rad(degree)));
-    //console.log('angle:'+degree);
 }
 
 
