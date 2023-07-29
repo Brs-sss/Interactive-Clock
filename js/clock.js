@@ -62,7 +62,6 @@ class Clock{
     }
 
     /**
-     * 
      * @param {Number} _tick 将要把this.tick置为_tick 以下同理
      */
     setTick(_tick) {

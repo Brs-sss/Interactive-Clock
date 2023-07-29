@@ -119,6 +119,10 @@ let initial_run_id=clockRun()  //开始运行,initial_run_id就是初始化那�
 settime_btn.addEventListener('click',()=>{
     var time=prompt('请输入时间',clock.getTimeString());
     let times=time.split(':').map((x)=>{return Number(x)})
+    if(times[1] < 0 || times[1] >= 60 || times[2] < 0 || times[2] > 60){
+        alert("请设置分、秒数小于60！")
+        return
+    }
     clock.setTime(...times,0)
 },false)
 
